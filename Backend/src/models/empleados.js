@@ -10,6 +10,10 @@ const empleadosSchema = new Schema({
         type: String,
         required: true
       },
+      contraseña: {
+        type: String,
+        required: true
+      },
       telefono: {
         type: String,
         required: true
