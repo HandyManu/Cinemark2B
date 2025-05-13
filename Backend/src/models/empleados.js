@@ -2,32 +2,36 @@ import { Schema,model } from "mongoose";
 
 const empleadosSchema = new Schema({
 
-    titulo: {
+    nombre: {
         type: String,
         required: true
       },
-      descripcion: {
+      correo: {
         type: String,
         required: true
       },
-      director: {
+      telefono: {
         type: String,
         required: true
       },
-      genero: {
+      direccion: {
         type: String,
         required: true
       },
-      anio: {
+      puesto: {
+        type: String,
+        required: true
+      },
+      fechaContratacion: {
+        type: timestamps,
+        required: true
+      },
+      salario: {
         type: Number,
         required: true
       },
-      duracion: {
-        type: Number,
-        required: true
-      },
-      imagen: {
-        type: String,
+      activo: {
+        type: Boolean,
         required: true
       }
 },{
