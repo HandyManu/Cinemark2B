@@ -11,6 +11,7 @@ const empleadosSchema = new Schema({
         required: true
       },
       contraseña: {
+
         type: String,
         required: true
       },
