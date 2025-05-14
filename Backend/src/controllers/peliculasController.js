@@ -1,47 +1,87 @@
-const peliculasController = {};
+import peliculasModel from "../models/peliculasModel.js";
+import {v2 as cloudinary} from "cloudinary";
+import { config } from "../config.js";
 
-import PeliculaModel from '../models/peliculas.js';
+cloudinary.config({
+    cloud_name: config.cloudinary.CLOUDINARY_CLOUD_NAME,
+    api_key: config.cloudinary.CLOUDINARY_API_KEY,
+    api_secret: config.cloudinary.CLOUDINARY_API_SECRET
+});
 
-//SELECT
-peliculasController.getPeliculas = async (req, res) => {
-  const peliculas = await PeliculaModel.find();
+const PeliculasController = {};
+
+PeliculasController.getAllPeliculas = async (req, res) => {
+  const peliculas = await peliculasModel.find();
   res.json(peliculas);
+
+}
+
+PeliculasController.createPelicula = async (req, res) => {
+  try {
+    const {  titulo,descripcion,director,genero,anio,duracion} = req.body;
+    let imagenUrl = "";
+    if (req.file) {
+            const result = await cloudinary.uploader.upload(req.file.path
+                , {
+                    folder: "public",
+                    allowed_formats: ["jpg", "png", "jpeg"]
+                }
+            );
+            imagenUrl = result.secure_url;
+          }
+    const newPelicula = new peliculasModel({
+      titulo,
+      descripcion,
+      director,
+      genero,
+      anio,
+      duracion,
+      imagen: imagenUrl
+    })
+    newPelicula.save()
+    res.status(201).json({message: "Pelicula creada correctamente"}); 
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({message: "Error al crear la pelicula"});
+    
+  }
+  
 };
 
-//insert
-peliculasController.createPelicula = async (req, res) => {
-  const { titulo,descripcion,director,genero,anio,duracion,imagen } =
-    req.body;
-  const newPelicula = new PeliculaModel({
-    titulo,
-    descripcion,
-    director,
-    genero,
-    anio,
-    duracion,
-    imagen
-  });
-  await newPelicula.save();
-  res.json({ message: 'Pelicula created' });
-};
+PeliculasController.updatePelicula = async (req, res) => {
+  try {
+    const { titulo,descripcion,director,genero,anio,duracion} = req.body;
+    let imagenUrl = "";
+    if (req.file) {
+            const result = await cloudinary.uploader.upload(req.file.path
+                , {
+                    folder: "public",
+                    allowed_formats: ["jpg", "png", "jpeg"]
+                }
+            );
+            imagenUrl = result.secure_url;
+          }
 
-//delete
-peliculasController.deletePelicula = async (req, res) => {
-  await PeliculaModel.findByIdAndDelete(req.params.id);
-  res.json({ message: 'Pelicula deleted' });
-};
+          await peliculasModel.findByIdAndUpdate(req.params.id, {
+            titulo,
+            descripcion,
+            director,
+            genero,
+            anio,
+            duracion,
+            imagen: imagenUrl
+          },{new: true});
 
-//update
-peliculasController.updatePelicula = async (req, res) => {
-  const { titulo,descripcion,director,genero,anio,duracion,imagen } =
-    req.body;
-  const updatePelicula = await PeliculaModel.findByIdAndUpdate(
-    req.params.id,
-    { titulo,descripcion,director,genero,anio,duracion,imagen },
-    { new: true }
-  );
-  res.json({ message: 'Pelicula updated' });
-};
+          res.status(200).json({message: "Pelicula actualizada correctamente"});
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({message: "Error al actualizar la pelicula"});
+    
+  }
+}
+
+export default PeliculasController;
 
 
-export default peliculasController;
+
+
