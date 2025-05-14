@@ -6,8 +6,8 @@ const transporter = nodemailer.createTransport({
     port: 465,
     secure: true,
     auth: {
-        user: config.correo.MAIL.USER,
-        pass: config.correo.MAIL.PASSWORD,
+        user: config.email.email_user,
+        pass: config.email.email_pass,
     },
 });
 

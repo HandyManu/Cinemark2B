@@ -7,6 +7,7 @@ import clientesModel from "../models/clientes.js";
 import { config } from "../config.js";
 
 const registerClientesController = {};
+
 //Funcion para registrar un cliente
 registerClientesController.register = async (req, res) => {
     const { nombre,correo,contraseña,telefono,direccion,activo } = req.body;
