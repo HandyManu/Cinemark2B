@@ -1,4 +1,4 @@
-import peliculasModel from "../models/peliculasModel.js";
+import peliculasModel from "../models/peliculas.js";
 import {v2 as cloudinary} from "cloudinary";
 import { config } from "../config.js";
 
@@ -79,6 +79,7 @@ PeliculasController.updatePelicula = async (req, res) => {
     
   }
 }
+
 
 export default PeliculasController;
 

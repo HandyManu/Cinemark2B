@@ -28,7 +28,7 @@ const empleadosSchema = new Schema({
         required: true
       },
       fechaContratacion: {
-        type: timestamps,
+        type: Date,
         required: true
       },
       salario: {
