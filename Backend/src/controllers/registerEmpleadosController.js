@@ -26,8 +26,26 @@ registerEmpleadosController.register = async (req, res) => {
             salario,
             activo: true,
         });
+        await newEmpleado.save();
+
+        jsonwebtoken.sign(
+            //que voy a guardar
+            { id:newEmpleado._id },
+             //secreto
+            config.JWT.SECRET, 
+            //cuando expira 
+            { expiresIn: config.JWT.EXPIRES_IN }, 
+            (error , token) => {
+                if (error) console.log(error);
+                res.cookie("authToken", token);
+                res.json({ message: "Employee registered successfully" });
+            }
+        );   
 
     } catch (error) {
-        
+        console.log(error);
+        res.status(500).json({ message: "Internal server error" });
     }
 };
+
+export default registerEmpleadosController;
