@@ -6,7 +6,7 @@ import empleadosRoutes from "../Backend/src/routes/empleados.js";
 import peliculasRoutes from "../Backend/src/routes/peliculas.js";
 import registerClientesRoutes from "../Backend/src/routes/registerClientes.js";
 import registerEmpleadosRoutes from "../Backend/src/routes/registerEmpleado.js";
-
+import passwordRecoveryRoutes from "../Backend/src/routes/passwordRecovery.js";
 import loginRoutes from "../Backend/src/routes/login.js";
 import logoutRoutes from "../Backend/src/routes/logout.js";
 
@@ -21,5 +21,6 @@ app.use("/api/registerClientes", registerClientesRoutes);
 app.use("/api/registerEmpleados", registerEmpleadosRoutes);
 app.use("/api/login",loginRoutes);
 app.use("/api/logout",logoutRoutes);
+app.use("/api/passwordRecovery", passwordRecoveryRoutes);   
 
 export default app;
