@@ -80,7 +80,7 @@ registerClientesController.verifyEmail = async (req, res) => {
 
     try {
         const decodedToken = jsonwebtoken.verify(token, config.JWT.SECRET);
-        const { email, verificationCode: storedcode } = decodedToken;
+        const { correo, verificationCode: storedcode } = decodedToken;
 
         if (verificationCode !== storedcode ) {
             return res.status(400).json({ message: "Código de verificación incorrecto" });
